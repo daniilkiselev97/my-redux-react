@@ -2,8 +2,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteBook, toggleFavorite } from '../../redux/books/actionCreators';
 import { BsBookmarkStarFill, BsBookmarkStar } from 'react-icons/bs';
 import './BookList.css';
+import { selectTitleFilter } from '../../redux/slices/filterSlice';
 const BookList = () => {
     const books = useSelector((state) => state.books);
+    const titleFilter = useSelector(selectTitleFilter);
     const dispatch = useDispatch();
     const handleDeleteBook = (id) => {
         dispatch(deleteBook(id));
@@ -11,6 +13,9 @@ const BookList = () => {
     const handleToggleFavorite = (id) => {
         dispatch(toggleFavorite(id));
     };
+    const filteredBooks = books.filter((book) => {
+        return book.title.toLowerCase().includes(titleFilter.toLowerCase());
+    });
 
     return (
         <div className="app-block book-list">
@@ -19,7 +24,7 @@ const BookList = () => {
                 <p>No books available</p>
             ) : (
                 <ul>
-                    {books.map((book, i) => (
+                    {filteredBooks.map((book, i) => (
                         <li key={book.id}>
                             <div className="book-info">
                                 {++i}. {book.title} by{' '}
