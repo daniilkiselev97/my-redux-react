@@ -26,6 +26,7 @@ const Filter = () => {
     const handleOnlyFavoriteFilterChange = () => {
         dispatch(setOnlyFavoriteFilter());
     };
+    
     return (
         <div className="app-block filter">
             <div className="filter-row">
