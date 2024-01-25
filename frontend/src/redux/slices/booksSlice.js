@@ -12,8 +12,8 @@ export const fetchBook = createAsyncThunk(
             const res = await axios.get(url);
             return res.data;
         } catch (error) {
-            thunkAPI.dispatch(setError(error.message))
-            throw error
+            thunkAPI.dispatch(setError(error.message));
+            throw error;
         }
     }
 );
@@ -36,6 +36,15 @@ const booksSlice = createSlice({
             });
         },
     },
+    //OPTION 1
+    // extraReducers: {
+    //     [fetchBook.fulfilled]: (state, action) => {
+    //         if (action.payload.title && action.payload.author) {
+    //             state.push(createBookWithID(action.payload, 'API'));
+    //         }
+    //     },
+    // },
+    //OPTION 2
     extraReducers(builder) {
         builder.addCase(fetchBook.fulfilled, (state, action) => {
             if (action.payload.title && action.payload.author) {
